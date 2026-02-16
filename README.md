@@ -2,7 +2,7 @@
 
 This tool demonstrates how AI can augment portfolio decision-making through transparent modeling, explicit assumptions, and stress-tested tradeoffs—rather than replacing judgment with opaque automation.
 
-A portfolio prioritization system designed for **program, product, and portfolio-level decision-making**.  It produces transparent, auditable rankings while explicitly separating **value estimation**, **risk policy**, and **organizational constraints**.
+It is designed for **program, product, and portfolio-level decision-making**.  It produces transparent, auditable rankings while explicitly separating **value estimation**, **risk policy**, and **organizational constraints**.
 
 This tool is intentionally conservative in its use of AI:  AI is applied only where it is defensible—**learning from historical outcomes** and **stress-testing assumptions**—not for opaque “AI decides” automation.
 
