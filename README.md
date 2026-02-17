@@ -148,14 +148,12 @@ For each metric:
 
 This preserves relative ordering, not absolute magnitude 
 
-```markdown
 ```math
 \text{Norm}(x_i) =
 \begin{cases}
 0.5, & \text{if all values are equal} \\
 \dfrac{x_i - \min(x)}{\max(x) - \min(x)}, & \text{otherwise}
 \end{cases}
-```
 ```
 
 ### Risk measurement: how confident are we to realizing its value
