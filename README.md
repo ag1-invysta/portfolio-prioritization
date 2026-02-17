@@ -130,6 +130,7 @@ Step 3: apply a per-level penalty
 Step 4: convert penalty to multiplier
 - Risk Multiplier = 1 - Penalty
 - e.g., risk 5: 1 - .32 = .68 . In this case, this initiative's confidence of realizing value is reduced by ~32%
+
 ## Final score formula
 - FinalScore(i) = BaseScore(i) × RiskMultiplier(i) × DependencyMultiplier(i)
 - Risk and dependencies are applied after value is estimated so that:
