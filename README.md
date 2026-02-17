@@ -44,14 +44,17 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
+```
 
 ## Baseline prioritization
 
+```bash 
 portfolio --initiatives data/sample_initiatives.csv --out ranked.csv
 portfolio --initiatives data/sample_initiatives.csv \
   --history data/sample_history.csv \
   --run-sensitivity \
   --out ranked_ai.csv
+```
 
 Outputs
 - ranked.csv / ranked_ai.csv: Scores, ranks, and explanations per initiative
@@ -93,6 +96,7 @@ BaseScore_i =
 w_R · Norm(RICE_i)
 + w_W · Norm(WSJF_i)
 + w_S · Norm(StrategicFit_i)
+```
 
 Where:
 
