@@ -20,8 +20,6 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 - Runs **sensitivity analysis** to show ranking stability under different assumptions
 - Produces **deterministic explanations** suitable for executive and governance review
 
----
-
 ## Key design principles
 
 - **Explainability first** – every score is traceable to a formula
@@ -56,9 +54,6 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 
 ```
 
-
----
-
 ## Installation
 
 ```bash
@@ -81,11 +76,10 @@ Outputs
 - ranked.csv / ranked_ai.csv: Scores, ranks, and explanations per initiative
 - rank_stability.csv: Ranking robustness across multiple scenarios
 
-## How weights and risk are applied 
-
-This section clarifies **exactly how weighting and risk adjustments work**, and why they are intentionally separated.
-
 ---
+
+## How weights, dependencies & risk are applied 
+
 
 ### Weighting: what is weighted and when
 
@@ -130,6 +124,39 @@ Weights represent value preference, e.g.:
 - “How much do we care about customer impact vs. economics vs. strategy?”
 
 They do not represent risk tolerance.
+
+### Normalization
+
+Why normalization is necessary: RICE, WSJF, and Strategic Fit live on very different scales:
+
+- RICE can be tens, hundreds, or thousands
+- WSJF can be thousands or tens of thousands
+- Strategic Fit is a small ordinal value (1–5)
+
+If you applied weights directly to raw values:
+
+- WSJF would dominate purely due to magnitude
+- Strategic Fit would be almost irrelevant
+- Weighting would be meaningless
+
+Normalization fixes this by converting each component into a common 0–1 scale, within the current portfolio.  What normalization does:
+
+For each metric:
+- The lowest value in the portfolio becomes 0
+- The highest value becomes 1
+- Everything else is placed proportionally between them
+
+This preserves relative ordering, not absolute magnitude 
+
+```markdown
+```math
+\text{Norm}(x_i) =
+\begin{cases}
+0.5, & \text{if all values are equal} \\
+\dfrac{x_i - \min(x)}{\max(x) - \min(x)}, & \text{otherwise}
+\end{cases}
+```
+```
 
 ### Risk measurement: how confident are we to realizing its value
 Step 1: Risk is rated on a 1–5 ordinal scale
