@@ -56,3 +56,83 @@ portfolio --initiatives data/sample_initiatives.csv \
 Outputs
 - ranked.csv / ranked_ai.csv: Scores, ranks, and explanations per initiative
 - rank_stability.csv: Ranking robustness across multiple scenarios
+
+## How weights and risk are applied 
+
+This section clarifies **exactly how weighting and risk adjustments work**, and why they are intentionally separated.
+
+---
+
+### Weighting: what is weighted and when
+
+Weights are applied to **normalized value components**, not to raw values and not directly to the final score.
+
+The calculation flow is:
+
+1. **Compute raw value components**
+   - RICE
+   - WSJF (if provided)
+   - Strategic Fit
+
+2. **Normalize each component across the portfolio**
+   - Converts each component to a 0–1 scale
+   - Prevents large-scale metrics (e.g., cost of delay) from dominating
+
+3. **Apply weights to the normalized values**
+   - This produces the **BaseScore**
+
+4. **Apply risk and dependency multipliers**
+   - This produces the **FinalScore**
+
+---
+
+### Base score formula
+
+```math
+BaseScore_i =
+w_R · Norm(RICE_i)
++ w_W · Norm(WSJF_i)
++ w_S · Norm(StrategicFit_i)
+
+Where:
+
+- w_R, w_W, w_S are portfolio-level weights: what is valued (today)
+- Weights sum to 1.0
+- BaseScore ∈ [0, 1]
+- Scores are relative within the portfolio
+
+Weights represent value preference, e.g.:
+- “How much do we care about customer impact vs. economics vs. strategy?”
+
+They do not represent risk tolerance.
+
+### Risk measurement: how confident are we to realizing its value
+Step 1: Risk is rated on a 1–5 ordinal scale
+- 1 = very low risk
+- 5 = very high risk
+
+We want:
+ - Risk 1 → no penalty
+ - Higher risk → progressively larger penalty
+
+The penalty should be:
+- Linear
+- Predictable
+- Easy to explain
+
+Step 2: shift scale, such that 1 has no penalty
+- (Risk - 1) does this
+
+Step 3: apply a per-level penalty
+- (arbitrary/tunable) chose 8% per risk level
+- e.g, risk 5: (risk -1) x .08 = .32
+
+Step 4: convert penalty to multiplier
+- Risk Multiplier = 1 - Penalty
+- e.g., risk 5: 1 - .32 = .68 . In this case, this initiative's confidence of realizing value is reduced by ~32%
+## Final score formula
+- FinalScore(i) = BaseScore(i) × RiskMultiplier(i) × DependencyMultiplier(i)
+- Risk and dependencies are applied after value is estimated so that:
+- Value judgment and delivery feasibility remain separate
+- Risk does not get double-counted
+- Sensitivity analysis remains meaningful
