@@ -10,7 +10,7 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 
 ## What this tool does
 
-- Ranks initiatives using a **base value score** derived from multiple lenses:
+- Ranks initiatives using a **base value score** derived from multiple signals/factors:
   - Product value (RICE)
   - Economic urgency (WSJF-like)
   - Strategic alignment
@@ -34,6 +34,27 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 ---
 
 ## Repository structure
+```
+.
+├── data
+│   ├── sample_history.csv
+│   └── sample_initiatives.csv
+├── pyproject.toml
+├── README.md
+├── src
+│   └── portfolio_prioritizer
+│       ├── __init__.py
+│       ├── cli.py
+│       ├── explain.py
+│       ├── model.py
+│       ├── schemas.py
+│       ├── scoring.py
+│       └── sensitivity.py
+└── tests
+    ├── test_scoring.py
+    └── test_sensitivity.py
+
+```
 
 
 ---
@@ -135,9 +156,13 @@ Step 4: convert penalty to multiplier
 - Risk Multiplier = 1 - Penalty
 - e.g., risk 5: 1 - .32 = .68 . In this case, this initiative's confidence of realizing value is reduced by ~32%
 
+### Dependency metric
+- DependencyMultiplier = 1 − min(DependencyCount,10) × 0.02
+- As applied, 2%/dependency capped at max 10 ; Capped to prevent extreme suppression
+
 ## Final score formula
-- FinalScore(i) = BaseScore(i) × RiskMultiplier(i) × DependencyMultiplier(i)
+- **FinalScore(i) = BaseScore(i) × RiskMultiplier(i) × DependencyMultiplier(i)**
 - Risk and dependencies are applied after value is estimated so that:
-- Value judgment and delivery feasibility remain separate
-- Risk does not get double-counted
-- Sensitivity analysis remains meaningful
+    - Value judgment and delivery feasibility remain separate
+    - Risk does not get double-counted
+    - Sensitivity analysis remains meaningful
