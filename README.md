@@ -19,6 +19,7 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 - Optionally trains an **interpretable AI model** on historical outcomes
 - Runs **sensitivity analysis** to show ranking stability under different assumptions
 - Produces **deterministic explanations** suitable for executive and governance review
+- if historical initiatives are supplied, the app runs a logistical regression model that is used to train the AI model.
 
 ## Key design principles
 
@@ -28,6 +29,14 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 - **Relative, not absolute** scoring
   - Rankings are meaningful within a portfolio, not as universal truth
 - **Policy knobs, not magic constants**
+
+## AI role
+
+- When historical data is provided, the tool trains a model on past initiatives and uses it to predict the probability of success for each current initiative, providing another value-based score. 
+- Each historical initiative is assigned a value that is captured in the column ```success_0to1``` & set to:
+    - 1 → the historical initiative was successful
+    - 0 → it was not (failed, stalled, underperformed, cancelled, etc.)
+- Our repo includes a sample historical dataset (sample_history.csv).
 
 ---
 
@@ -191,3 +200,4 @@ Step 4: convert penalty to multiplier
     - Value judgment and delivery feasibility remain separate
     - Risk does not get double-counted
     - Sensitivity analysis remains meaningful
+
