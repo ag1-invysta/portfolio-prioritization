@@ -1,0 +1,14 @@
+id,title,effort_person_weeks,reach_users,impact_1to5,confidence_0to1,cost_of_delay_per_week,risk_1to5,strategic_fit_1to5,dependency_count,compliance_or_contractual
+INIT-001,SOC2 evidence automation,10,500,4.0,0.70,45000,3,5,6,1
+INIT-002,Customer SSO (SAML) for enterprise tier,14,1200,4.5,0.65,60000,3,5,5,0
+INIT-003,On-call incident runbook modernization,6,200,3.5,0.80,15000,2,4,2,0
+INIT-004,Data retention & deletion controls,8,800,4.0,0.60,35000,4,5,7,1
+INIT-005,Reduce P95 API latency (hot path),12,5000,4.5,0.55,80000,4,4,8,0
+INIT-006,Mobile app crash reduction initiative,9,3000,4.0,0.70,50000,3,4,4,0
+INIT-007,New analytics dashboard (self-serve),11,1500,3.5,0.60,25000,2,3,3,0
+INIT-008,Replace legacy ETL with incremental pipeline,16,900,4.0,0.50,40000,5,4,9,0
+INIT-009,Vendor contract renewal migration support,5,300,3.0,0.85,20000,2,3,2,1
+INIT-010,Implement feature flags & progressive rollout,7,2500,4.0,0.75,45000,2,4,4,0
+INIT-011,Security dependency patching automation,6,2000,3.5,0.80,30000,2,5,5,0
+INIT-012,Payments retry & reconciliation improvements,13,1100,4.5,0.60,70000,3,4,6,0
+
