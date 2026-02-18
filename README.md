@@ -19,7 +19,7 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
 - Optionally trains an **interpretable AI model** on historical outcomes
 - Runs **sensitivity analysis** to show ranking stability under different assumptions
 - Produces **deterministic explanations** suitable for executive and governance review
-- if historical initiatives are supplied, the app runs a logistical regression model that is used to train the AI model.
+- This project uses a simple, interpretable machine learning model—part of a broader AI decision-support system—to learn from historical outcomes and assist in portfolio prioritization.
 
 ## Key design principles
 
@@ -30,7 +30,7 @@ This tool is intentionally conservative in its use of AI:  AI is applied only wh
   - Rankings are meaningful within a portfolio, not as universal truth
 - **Policy knobs, not magic constants**
 
-## AI role
+## AI/ML role
 
 - When historical data is provided, the tool trains a model on past initiatives and uses it to predict the probability of success for each current initiative, providing another value-based score. 
 - Each historical initiative is assigned a value that is captured in the column ```success_0to1``` & set to:
